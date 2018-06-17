@@ -1,40 +1,21 @@
 class Block
-  attr_reader :offset, :position
+  attr_accessor :pos, :color, :z, :fill
+  attr_reader :sides
 
-  def initialize(x = 0, y = 0)
-    @offset = V.new(x, y)
+  def initialize
+    yield self
+    build
   end
 
-  def freeze(position)
-    @position = position
-    self
+  def build
+    @sides = [@pos, @pos + V.new(1, 0), @pos + V.new(1, 1), @pos + V.new(0, 1)]
   end
 
-  def ==(block)
-    block.object_id == self.object_id
+  def get_world_sides(origin, scale)
+    @sides.map { |side| scale.convert(origin.convert(side)) }
   end
 
-  def x
-    @position.x
-  end
-
-  def y
-    @position.y
-  end
-
-  def is_above_left_of(block)
-    block.x - 1 == x && block.y + 1 == y
-  end
-
-  def is_above(block)
-    block.y + 1 == y && block.x == x
-  end
-
-  def is_right_of(block)
-    block.x + 1 == x && block.y == y
-  end
-
-  def is_below(block)
-    block.y - 1 == y && block.x == x
+  def draw(origin, scale)
+    Render.rect(get_world_sides(origin, scale), Colors.light_grey.get, @fill, @z)
   end
 end

@@ -6,12 +6,12 @@ class Shape
   # O O O O O
 
   class I < Shape
-    def initialize
-      super
+    def initialize(pos, angle)
+      super(pos, angle)
     end
 
     def get_blocks
-      [ Block.new(-1, 0), Block.new(0, 0), Block.new(0, 1), Block.new(0, 2) ]
+      [ Block.new(-1, 0), Block.new(0, 0), Block.new(1, 0), Block.new(2, 0) ]
     end
   end
 end

@@ -2,8 +2,9 @@ class Shape
   attr_reader :pos, :angle, :blocks
   attr_reader :transform
 
-  def initialize
-    @pos, @angle = V.new, 0
+  def initialize(pos, angle)
+    @pos = pos
+    @angle = angle * 90
     build
   end
 
@@ -22,6 +23,6 @@ class Shape
   end
 
   def blocks
-    @blocks.map { |block| @transform.convert(block.offset).round }
+    @blocks.map { |block| block.freeze(@transform.convert(block.offset).rounded) }
   end
 end

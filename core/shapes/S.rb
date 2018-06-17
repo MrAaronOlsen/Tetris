@@ -4,8 +4,8 @@ class Shape
   # O O O
 
   class S < Shape
-    def initialize
-      super
+    def initialize(pos, angle)
+      super(pos, angle)
     end
 
     def get_blocks
