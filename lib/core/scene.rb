@@ -16,15 +16,12 @@ class Scene
       Shape::I.new(V.new(6, 10)),
       Shape::O.new(V.new(2, 14))
     ]
-    @time = Time.new
+
+    @tick = Tick.new
   end
 
   def update
-    now = Time.new
-    if now - @time > 2
-      @time = now
-      @shapes.each { |shape| shape.rotate(1) }
-    end
+    @shapes.each { |shape| shape.rotate(1) } if @tick.check
   end
 
   def draw
