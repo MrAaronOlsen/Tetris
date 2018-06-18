@@ -1,16 +1,22 @@
 class Shape
   attr_reader :pos, :angle, :blocks
+  attr_reader :color
   attr_reader :transform
 
-  def initialize(pos, angle)
-    @pos = pos
-    @angle = angle * 90
-    build
+  def build
+    @blocks = build_shape
+    set_transform
   end
 
-  def build
-    @blocks = get_blocks
-    set_transform
+  def build_shape
+    shape_verts.map do |shape|
+      Block.new do |block|
+        block.pos = shape
+        block.color = @color
+        block.fill = true
+        block.z = 3
+      end
+    end
   end
 
   def rotate(direction)
@@ -22,7 +28,7 @@ class Shape
     @transform = Mat.new_transform(@pos, @angle)
   end
 
-  def blocks
-    @blocks.map { |block| block.freeze(@transform.convert(block.offset).rounded) }
+  def draw(offset, scale)
+    @blocks.each { |block| block.draw(@transform.add_translate(offset), scale) }
   end
 end

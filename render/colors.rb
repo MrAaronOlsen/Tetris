@@ -12,6 +12,10 @@ class Colors
       Color.new(255, 0, 0, 255)
     end
 
+    def light_blue
+      Color.new(255, 66, 244, 229)
+    end
+
     def yellow
       Color.new(255, 255, 255, 0)
     end

@@ -29,6 +29,10 @@ class Matrix
   def convert(vert)
     V.new(@a*vert.x + @c*vert.y + @tx, @b*vert.x + @d*vert.y + @ty)
   end
+
+  def add_translate(translate)
+    Mat.new(@a, @c, @tx + translate.tx, @b, @d, @ty + translate.ty)
+  end
 end
 
 Mat = Matrix

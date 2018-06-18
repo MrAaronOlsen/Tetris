@@ -1,7 +1,7 @@
 module Board
   class Well
     attr_reader :width, :height
-    attr_reader :matrix
+    attr_reader :matrix, :offset
 
     def initialize
       @width, @height = 10, 16

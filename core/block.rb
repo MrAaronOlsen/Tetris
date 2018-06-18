@@ -8,14 +8,14 @@ class Block
   end
 
   def build
-    @sides = [@pos, @pos + V.new(1, 0), @pos + V.new(1, 1), @pos + V.new(0, 1)]
+    @world_sides = [@pos + V.new(-0.5, -0.5), @pos + V.new(0.5, -0.5), @pos + V.new(0.5, 0.5), @pos + V.new(-0.5, 0.5)]
   end
 
   def get_world_sides(origin, scale)
-    @sides.map { |side| scale.convert(origin.convert(side)) }
+    @world_sides.map { |side| scale.convert(origin.convert(side)) }
   end
 
   def draw(origin, scale)
-    Render.rect(get_world_sides(origin, scale), Colors.light_grey.get, @fill, @z)
+    Render.rect(get_world_sides(origin, scale), @color.get, @fill, @z)
   end
 end

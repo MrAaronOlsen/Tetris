@@ -6,12 +6,16 @@ class Shape
   # O O O O O
 
   class I < Shape
-    def initialize(pos, angle)
-      super(pos, angle)
+    def initialize(pos)
+      @pos = pos
+      @angle = 0
+      @color = Colors.light_blue
+
+      build
     end
 
-    def get_blocks
-      [ Block.new(-1, 0), Block.new(0, 0), Block.new(1, 0), Block.new(2, 0) ]
+    def shape_verts
+      [ V.new(-1, 0), V.new(0, 0), V.new(1, 0), V.new(2, 0) ]
     end
   end
 end
