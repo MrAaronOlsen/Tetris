@@ -19,6 +19,8 @@ class Window < Gosu::Window
 	end
 
 	def button_down(id)
+		@scene.button_down(id)
+
     close if id == Gosu::KbEscape
   end
 end

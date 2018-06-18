@@ -14,7 +14,7 @@ class Shape
       build
     end
 
-    def shape_verts
+    def shape_map
       [ V.new(-1, 0), V.new(0, 0), V.new(1, 0), V.new(2, 0) ]
     end
   end

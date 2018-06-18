@@ -9,14 +9,13 @@ class Shape
   end
 
   def build_shape
-    shape_verts.map do |shape|
-      Block.new do |block|
-        block.pos = shape
-        block.color = @color
-        block.fill = true
-        block.z = 3
-      end
+    shape_map.map do |pos|
+      Block.new(pos, @color, fill: true, z: 2)
     end
+  end
+
+  def set_transform
+    @transform = Mat.new_transform(@pos, @angle)
   end
 
   def rotate(direction)
@@ -24,8 +23,9 @@ class Shape
     set_transform
   end
 
-  def set_transform
-    @transform = Mat.new_transform(@pos, @angle)
+  def move(direction)
+    @pos.add(V.new(1 * direction, 0))
+    set_transform
   end
 
   def draw(offset, scale)

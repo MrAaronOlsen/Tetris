@@ -2,8 +2,12 @@ class Block
   attr_accessor :pos, :color, :z, :fill
   attr_reader :sides
 
-  def initialize
-    yield self
+  def initialize(pos, color, z: 1, fill: false)
+    @pos = pos
+    @color = color
+    @z = z
+    @fill = fill
+
     build
   end
 
