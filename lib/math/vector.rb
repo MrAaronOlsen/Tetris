@@ -3,8 +3,8 @@ class Vector
   attr_reader :name
 
   def initialize(x = 0.0, y = 0.0)
-    @x = x.to_f
-    @y = y.to_f
+    @x = x
+    @y = y
   end
 
   def with_name(name)
