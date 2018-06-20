@@ -14,6 +14,12 @@ class Shape
     end
   end
 
+  def get_world_block_pos
+    @blocks.map do |block|
+      @transform.convert(block.pos)
+    end
+  end
+
   def set_transform
     @transform = Mat.new_transform(@pos, @angle)
   end
@@ -24,7 +30,18 @@ class Shape
   end
 
   def move(direction)
-    @pos.add(V.new(1 * direction, 0))
+    @pos += (V.new(1 * direction, 0))
+    set_transform
+
+    @blocks.each do |block|
+      block_pos = @transform.convert(block.pos)
+
+      if block_pos.x < 0 || block_pos.x > 9
+        @pos -= (V.new(1 * direction, 0))
+        set_transform
+      end
+    end
+
     set_transform
   end
 

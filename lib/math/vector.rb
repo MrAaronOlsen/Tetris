@@ -138,7 +138,7 @@ class Vector
   end
 
   def rounded
-    V.new(@x.ceil, @y.ceil)
+    V.new(@x.round, @y.round)
   end
 
   # matrix related

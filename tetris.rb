@@ -1,3 +1,3 @@
-require './base.rb'
+require './loader.rb'
 
 Window.new.show

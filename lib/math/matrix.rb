@@ -3,8 +3,8 @@ class Matrix
   attr_reader :b, :d, :ty
 
   def initialize(a, c, tx, b, d, ty)
-    @a, @c, @tx = a.to_f, c.to_f, tx.to_f
-    @b, @d, @ty = b.to_f, d.to_f, ty.to_f
+    @a, @c, @tx = a, c, tx
+    @b, @d, @ty = b, d, ty
   end
 
   class << self
@@ -21,7 +21,7 @@ class Matrix
     end
 
     def new_transform(vect, angle)
-      rot = V.from_angle(angle);
+      rot = V.from_angle(angle).rounded;
       Mat.new(rot.x, -rot.y, vect.x, rot.y, rot.x, vect.y)
     end
   end
