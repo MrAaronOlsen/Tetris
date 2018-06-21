@@ -6,10 +6,21 @@ class Arbiter
       next_angle = next_state * 90
       kick_offset = get_kick_offset_for(shape.type)
 
+      puts "\n"
+      puts "******* Start *******"
+      puts "Current Position: #{shape.pos}"
+      puts "Current State: #{shape.state}"
+      puts "Next State: #{next_state}"
+
       Array(0..kick_offset[0].size - 1).each do |i|
+        puts "Kick Offset This State: #{kick_offset[shape.state][i]}"
+        puts "Kick Offset Next State: #{kick_offset[next_state][i]}"
+
         kick = kick_offset[shape.state][i] - kick_offset[next_state][i]
+        puts "Kick: #{kick}"
 
         next_pos = shape.pos + kick
+        puts "Next Position: #{next_pos}"
         next_transform = Mat.new_transform(next_pos, next_angle)
 
         if not_colliding(shape, next_transform)

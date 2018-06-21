@@ -10,7 +10,7 @@ class Shape
   end
 
   def get_angle
-    @state * -90
+    @state * 90
   end
 
   def state=(state)
@@ -43,12 +43,12 @@ class Shape
   end
 
   def move(direction)
-    new_pos = @pos + (V.new(1 * direction, 0))
+    new_pos = @pos + direction
     Arbiter.check_position(self, new_pos)
   end
 
   def get_next_state(direction)
-    next_state = (@state + direction) % 4
+    next_state = -(@state + direction) % 4
     next_state += 3 if next_state < 0
     next_state
   end

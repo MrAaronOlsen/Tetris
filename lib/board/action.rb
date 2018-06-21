@@ -10,9 +10,9 @@ module Board
       when Gosu::KB_DOWN
         block.rotate(-1)
       when Gosu::KB_LEFT
-        block.move(-1)
+        block.move(V.new(-1, 0))
       when Gosu::KB_RIGHT
-        block.move(1)
+        block.move(V.new(1, 0))
       when Gosu::KB_SPACE
         block.drop
       end
