@@ -7,6 +7,7 @@ class Shape
 
   class I < Shape
     def initialize(pos)
+      @type = "I"
       @pos = pos
       @angle = 0
       @color = Colors.light_blue

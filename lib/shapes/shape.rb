@@ -1,11 +1,28 @@
 class Shape
-  attr_reader :pos, :angle, :blocks
-  attr_reader :color
+  attr_reader :pos, :state, :blocks
+  attr_reader :color, :type
   attr_reader :transform
 
   def build
     @blocks = build_shape
+    @state = 0
     set_transform
+  end
+
+  def get_angle
+    @state * -90
+  end
+
+  def state=(state)
+    @state = state
+  end
+
+  def pos=(pos)
+    @pos = pos
+  end
+
+  def set_transform
+    @transform = Mat.new_transform(@pos, get_angle)
   end
 
   def build_shape
@@ -14,35 +31,26 @@ class Shape
     end
   end
 
-  def get_world_block_pos
+  def get_block_positions(transform)
     @blocks.map do |block|
-      @transform.convert(block.pos)
+      transform.convert(block.pos)
     end
-  end
-
-  def set_transform
-    @transform = Mat.new_transform(@pos, @angle)
   end
 
   def rotate(direction)
-    @angle += (90 * direction)
-    set_transform
+    next_state = get_next_state(direction)
+    Arbiter.check_rotation(self, next_state)
   end
 
   def move(direction)
-    @pos += (V.new(1 * direction, 0))
-    set_transform
+    new_pos = @pos + (V.new(1 * direction, 0))
+    Arbiter.check_position(self, new_pos)
+  end
 
-    @blocks.each do |block|
-      block_pos = @transform.convert(block.pos)
-
-      if block_pos.x < 0 || block_pos.x > 9
-        @pos -= (V.new(1 * direction, 0))
-        set_transform
-      end
-    end
-
-    set_transform
+  def get_next_state(direction)
+    next_state = (@state + direction) % 4
+    next_state += 3 if next_state < 0
+    next_state
   end
 
   def draw(offset, scale)
