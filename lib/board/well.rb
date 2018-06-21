@@ -10,7 +10,7 @@ module Board
       @matrix = Array.new(@width * @height)
       build_matrix
 
-      @live_shape = Shape::Z.new(V.new(5, 3))
+      @live_shape = Shape::I.new(V.new(5, 3))
     end
 
     def build_matrix

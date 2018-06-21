@@ -38,19 +38,12 @@ class Shape
   end
 
   def rotate(direction)
-    next_state = get_next_state(direction)
-    Arbiter.check_rotation(self, next_state)
+    Arbiter.check_rotation(self, direction)
   end
 
   def move(direction)
     new_pos = @pos + direction
     Arbiter.check_position(self, new_pos)
-  end
-
-  def get_next_state(direction)
-    next_state = -(@state + direction) % 4
-    next_state += 3 if next_state < 0
-    next_state
   end
 
   def draw(offset, scale)

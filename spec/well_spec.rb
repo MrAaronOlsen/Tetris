@@ -18,9 +18,10 @@ RSpec.describe Board::Well do
     binding.pry
   end
 
-  def get_new_state(direction)
+  def get_next_state(direction)
     @state = (@state + direction) % 4
     @state += 3 if @state < 0
+    @state
   end
 
 end
