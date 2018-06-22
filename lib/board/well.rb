@@ -14,7 +14,7 @@ module Board
     end
 
     def spawn_shape
-      @live_shape = Shape.random(V.new(5, 2))
+      @live_shape = Shape.random.call(V.new(5, 1))
     end
 
     def build_matrix

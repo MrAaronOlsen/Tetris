@@ -49,9 +49,13 @@ class Shape
   end
 
   class << self
-    def random(pos)
-      [ Shape::J.new(pos), Shape::L.new(pos), Shape::S.new(pos),
-        Shape::Z.new(pos), Shape::T.new(pos), Shape::O.new(pos), Shape::I.new(pos) ].sample
+    # def random(pos)
+    #   [ Shape::J.new(pos), Shape::L.new(pos), Shape::S.new(pos),
+    #     Shape::Z.new(pos), Shape::T.new(pos), Shape::O.new(pos), Shape::I.new(pos) ].sample
+    # end
+
+    def random
+      [ lambda { |pos| Shape::S.new(pos) }, lambda { |pos| Shape::Z.new(pos) }].sample
     end
   end
 end
