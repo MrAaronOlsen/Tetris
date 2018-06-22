@@ -10,11 +10,12 @@ module Board
       @offset = Mat.new_translate(V.new(5, 4))
       @matrix = Array.new(@width * @height)
       @frozen_shapes = Array.new
+
       build_matrix
     end
 
     def spawn_shape
-      @live_shape = Shape.random.call(V.new(5, 1))
+      @live_shape = Shape.random.call(V.new(4, 3))
     end
 
     def build_matrix

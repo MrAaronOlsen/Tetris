@@ -30,9 +30,10 @@ module Board
     def update
       if live_shape.nil?
         @well.spawn_shape
-      else
-        move_live_shape(V.new(0, 1))
       end
+      # else
+      #   move_live_shape(V.new(0, 1))
+      # end
     end
 
     def rotate_live_shape(direction)
@@ -48,10 +49,10 @@ module Board
         next_transform = Mat.new_transform(next_pos, next_angle)
 
         if colliding(live_shape, next_transform)
-          next_pos = live_shape.pos - kick
-          next_transform = Mat.new_transform(next_pos, next_angle)
-
-          break unless colliding(live_shape, next_transform)
+          # next_pos = live_shape.pos - kick
+          # next_transform = Mat.new_transform(next_pos, next_angle)
+          #
+          # break unless colliding(live_shape, next_transform)
         else
           break
         end

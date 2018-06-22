@@ -29,9 +29,9 @@ class Shape
 
       def kick_offset_O
         [ [ V.new( 0, 0) ],
-          [ V.new(-1, 0) ],
-          [ V.new(-1,-1) ],
-          [ V.new( 0,-1) ] ]
+          [ V.new( 0, 1) ],
+          [ V.new(-1, 1) ],
+          [ V.new(-1, 0) ] ]
       end
     end
   end
