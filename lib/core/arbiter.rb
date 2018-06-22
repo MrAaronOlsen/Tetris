@@ -6,6 +6,7 @@ class Arbiter
       next_state = get_next_state(shape.state, direction)
       next_angle = next_state * 90
       kick_offset = get_kick_offset_for(shape.type)
+      next_pos = nil
 
       Array(0..kick_offset[0].size - 1).each do |i|
         kick = kick_offset[shape.state][i] - kick_offset[next_state][i]
@@ -13,46 +14,47 @@ class Arbiter
         next_pos = shape.pos + kick
         next_transform = Mat.new_transform(next_pos, next_angle)
 
-        if not_colliding(shape, next_transform)
-          shape.pos = next_pos
-          shape.state = next_state
-          shape.set_transform
-          break
-        else
+        if colliding(shape, next_transform)
           next_pos = shape.pos - kick
           next_transform = Mat.new_transform(next_pos, next_angle)
-          if not_colliding(shape, next_transform)
-            shape.pos = next_pos
-            shape.state = next_state
-            shape.set_transform
-            break
-          end
-        end
 
+          break unless colliding(shape, next_transform)
+        else
+          break
+        end
       end
+
+      shape.pos = next_pos
+      shape.state = next_state
+      shape.set_transform
     end
 
-    def check_position(shape, next_pos)
+    def check_position(shape, direction)
+      next_pos = get_next_position(shape.pos, direction)
       next_trans = Mat.new_transform(next_pos, shape.get_angle)
 
-      if not_colliding(shape, next_trans)
+      if !colliding(shape, next_trans)
         shape.pos = next_pos
         shape.set_transform
       end
     end
 
-    def not_colliding(shape, next_trans)
+    def colliding(shape, next_trans)
       shape.get_block_positions(next_trans).each do |pos|
-        return false if pos.x < 0 || pos.x > 9
+        return true if pos.x < 0 || pos.x > 9
       end
 
-      true
+      false
     end
 
     def get_next_state(current_state, direction)
       next_state = (current_state + direction) % 4
       next_state += 3 if next_state < 0
       next_state
+    end
+
+    def get_next_position(current_position, direction)
+      current_position + direction
     end
 
     def kick_offset_JLSZT

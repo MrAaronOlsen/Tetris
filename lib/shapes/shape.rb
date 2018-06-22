@@ -42,8 +42,7 @@ class Shape
   end
 
   def move(direction)
-    new_pos = @pos + direction
-    Arbiter.check_position(self, new_pos)
+    Arbiter.check_position(self, direction)
   end
 
   def draw(offset, scale)
