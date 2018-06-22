@@ -18,6 +18,11 @@ module Board
       @live_shape = Shape.random.call(V.new(4, 3))
     end
 
+    def freeze
+      @frozen_shapes << @live_shape
+      @live_shape = nil
+    end
+
     def build_matrix
       row, col = 0, 0
 
