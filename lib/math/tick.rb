@@ -1,8 +1,8 @@
 class Tick
   attr_reader :span, :time
 
-  def initialize
-    @span = 2
+  def initialize(span)
+    @span = span
     @time = Time.now
   end
 

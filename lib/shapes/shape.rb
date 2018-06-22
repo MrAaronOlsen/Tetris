@@ -21,6 +21,13 @@ class Shape
     @pos = pos
   end
 
+  def set(pos, state)
+    @pos = pos
+    @state = state
+
+    set_transform
+  end
+
   def set_transform
     @transform = Mat.new_transform(@pos, get_angle)
   end
@@ -37,15 +44,14 @@ class Shape
     end
   end
 
-  def rotate(direction)
-    Arbiter.check_rotation(self, direction)
-  end
-
-  def move(direction)
-    Arbiter.check_position(self, direction)
-  end
-
   def draw(offset, scale)
     @blocks.each { |block| block.draw(@transform.add_translate(offset), scale) }
+  end
+
+  class << self
+    def random(pos)
+      [ Shape::J.new(pos), Shape::L.new(pos), Shape::S.new(pos),
+        Shape::Z.new(pos), Shape::T.new(pos), Shape::O.new(pos), Shape::I.new(pos) ].sample
+    end
   end
 end

@@ -7,12 +7,13 @@ class Scene
     @scale = Mat.new_scale(@width / 24, @width / 24)
 
     @well = Board::Well.new
-    @action = Board::Action.new
+    @arbiter = Board::Arbiter.new(@well)
 
-    @tick = Tick.new
+    @tick = Tick.new(1)
   end
 
   def update
+    @arbiter.update if @tick.check
   end
 
   def draw
@@ -20,6 +21,6 @@ class Scene
   end
 
   def button_down(button)
-    @action.query(button, @well.live_shape)
+    @arbiter.query(button)
   end
 end
