@@ -54,7 +54,7 @@ module Board
 
     def move_live_shape(direction)
       return if live_shape.nil?
-      
+
       next_pos = get_next_position(live_shape.pos, direction)
       next_trans = Mat.new_transform(next_pos, live_shape.get_angle)
 
@@ -67,7 +67,7 @@ module Board
     end
 
     def drop_live_shape
-      @well.freeze if !move_live_shape(V.new(0, 1))
+      @well.freeze_live_shape if !move_live_shape(V.new(0, 1))
     end
 
     def colliding?(shape, transform)
@@ -86,12 +86,7 @@ module Board
     end
 
     def colliding_with_other_pieces(pos)
-      @well.frozen_shapes.each do |shape|
-        shape_blocks = shape.get_block_positions(shape.transform)
-        return true if shape_blocks.any? { |block_pos| block_pos == pos }
-      end
-
-      false
+      return true if @well.has_block_at(pos)
     end
 
     def get_next_state(current_state, direction)

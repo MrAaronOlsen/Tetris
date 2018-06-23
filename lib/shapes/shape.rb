@@ -44,6 +44,13 @@ class Shape
     end
   end
 
+  def freeze_blocks(transform)
+    @blocks.map do |block|
+      block.pos = transform.convert(block.pos)
+      block.build
+    end
+  end
+
   def draw(offset, scale)
     @blocks.each { |block| block.draw(@transform.add_translate(offset), scale) }
   end
@@ -58,9 +65,5 @@ class Shape
         lambda { |pos| Shape::O.new(pos) },
         lambda { |pos| Shape::I.new(pos) } ].sample
     end
-
-    # def random
-    #   [ lambda { |pos| Shape::S.new(pos) }, lambda { |pos| Shape::Z.new(pos) }].sample
-    # end
   end
 end

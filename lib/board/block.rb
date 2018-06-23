@@ -11,6 +11,18 @@ class Block
     build
   end
 
+  def x
+    @pos.x
+  end
+
+  def y
+    @pos.y
+  end
+
+  def pos=(pos)
+    @pos = pos
+  end
+
   def build
     @world_sides = [@pos + V.new(-0.5, -0.5), @pos + V.new(0.5, -0.5), @pos + V.new(0.5, 0.5), @pos + V.new(-0.5, 0.5)]
   end

@@ -1,46 +1,56 @@
 module Board
   class Well
     attr_reader :width, :height
-    attr_reader :matrix, :offset
-    attr_accessor :live_shape
-    attr_reader :frozen_shapes
+    attr_reader :grid, :offset
+    attr_reader :live_shape
 
     def initialize
       @width, @height = 10, 16
       @offset = Mat.new_translate(V.new(5, 4))
-      @matrix = Array.new(@width * @height)
-      @frozen_shapes = Array.new
-
-      build_matrix
+      @grid = Grid.new(@width, @height)
     end
 
     def spawn_shape
-      @live_shape = Shape.random.call(V.new(4, 3))
+      @live_shape = Shape.random.call(V.new(4, 1))
     end
 
-    def freeze
-      @frozen_shapes << @live_shape
+    def freeze_live_shape
+      @grid.add_shape(@live_shape)
+      check_for_complete_rows
+
       @live_shape = nil
     end
 
-    def build_matrix
-      row, col = 0, 0
+    def has_block_at(pos)
+      @grid.rows[pos.y].cells[pos.x].has_block?
+    end
 
-      @matrix.size.times do |i|
-        if i > 0 && i.modulo(@width).zero?
-          row += 1
-          col += @width
+    def check_for_complete_rows
+      @grid.rows.each do |row|
+        if row.complete?
+          row.destroy
+          adjust_blocks_above(row.number)
         end
+      end
+    end
 
-        @matrix[i] = Block.new(V.new(i - col, row), Colors.grey)
+    def adjust_blocks_above(line)
+      @grid.rows.each do |row|
+        next if row.number > line
+
+        row.cells.each do |cell|
+          previous_row = @grid.rows[row.previous_row]
+          return if previous_row.nil?
+
+          previous_row.cells[cell.x].add_block(cell.block)
+          cell.destroy_block
+        end
       end
     end
 
     def draw(scale)
-      @matrix.each { |grid| grid.draw(@offset, scale) }
+      @grid.draw(@offset, scale)
       @live_shape.draw(@offset, scale) if @live_shape
-      @frozen_shapes.each { |shape| shape.draw(@offset, scale) }
     end
-
   end
 end
