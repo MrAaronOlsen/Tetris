@@ -12,8 +12,8 @@ module Board
       @cells.all? { |cell| cell.has_block? }
     end
 
-    def destroy
-      @cells.each { |cell| cell.destroy_block }
+    def clear
+      @cells.each { |cell| cell.clear_block }
     end
 
     def next_row

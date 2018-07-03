@@ -14,16 +14,20 @@ module Board
       @grid.pos.y
     end
 
+    def clear_grid
+      @grid.clear
+    end
+
     def add_block(block)
       return if block.nil?
-      
+
       block.pos = V.new(x, y)
       block.build
 
       @block = block
     end
 
-    def destroy_block
+    def clear_block
       @block = nil
     end
 

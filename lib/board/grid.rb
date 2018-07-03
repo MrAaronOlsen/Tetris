@@ -10,6 +10,10 @@ module Board
       build_grid
     end
 
+    def clear
+      @rows.each { |row| row.clear }
+    end
+
     def add_shape(shape)
       shape.freeze_blocks(shape.transform)
 

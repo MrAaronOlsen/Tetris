@@ -54,16 +54,4 @@ class Shape
   def draw(offset, scale)
     @blocks.each { |block| block.draw(@transform.add_translate(offset), scale) }
   end
-
-  class << self
-    def random
-      [ lambda { |pos| Shape::S.new(pos) },
-        lambda { |pos| Shape::Z.new(pos) },
-        lambda { |pos| Shape::J.new(pos) },
-        lambda { |pos| Shape::L.new(pos) },
-        lambda { |pos| Shape::T.new(pos) },
-        lambda { |pos| Shape::O.new(pos) },
-        lambda { |pos| Shape::I.new(pos) } ].sample
-    end
-  end
 end

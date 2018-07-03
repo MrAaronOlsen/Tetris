@@ -23,15 +23,16 @@ module Board
       when Gosu::KB_RIGHT
         move_live_shape(V.new(1, 0))
       when Gosu::KB_SPACE
-        @well.live_shape = nil
+        drop_live_shape
       end
     end
 
     def update
       if live_shape.nil?
         @well.spawn_shape
+        @well.clear if colliding_with_other_pieces(@well.live_shape.pos)
       else
-        drop_live_shape
+        apply_gravity
       end
     end
 
@@ -66,8 +67,13 @@ module Board
       false
     end
 
-    def drop_live_shape
+    def apply_gravity
       @well.freeze_live_shape if !move_live_shape(V.new(0, 1))
+    end
+
+    def drop_live_shape
+      while move_live_shape(V.new(0, 1))
+      end
     end
 
     def colliding?(shape, transform)
