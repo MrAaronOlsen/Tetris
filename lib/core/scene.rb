@@ -2,18 +2,18 @@ class Scene
   attr_reader :width, :height
   attr_reader :well
 
-  def initialize(width, height)
-    @width, @height = width, height
+  def initialize(width)
+    @width = width
     @scale = Mat.new_scale(@width / 24, @width / 24)
 
     @well = Board::Well.new
     @arbiter = Board::Arbiter.new(@well)
 
-    @tick = Tick.new(0.5)
+    @tick = Tick.new
   end
 
   def update
-    @arbiter.update if @tick.check
+    @arbiter.update if @tick.check(@well.speed)
   end
 
   def draw

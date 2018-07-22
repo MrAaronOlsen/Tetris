@@ -9,6 +9,11 @@ module Board
       @offset = Mat.new_translate(V.new(5, 4))
       @grid = Grid.new(@width, @height)
       @shaper = Shaper.new
+      @score = Score.new
+    end
+
+    def speed
+      1.0 / (@score.level + 1)
     end
 
     def spawn_shape
@@ -49,6 +54,8 @@ module Board
       end
 
       return if last_row.nil?
+
+      @score.add(rows_to_drop)
       remove_rows(rows_to_drop)
     end
 
@@ -69,8 +76,10 @@ module Board
 
     def draw(scale)
       @grid.draw(@offset, scale)
-      @shaper.draw(scale)
       @live_shape.draw(@offset, scale) if @live_shape
+
+      @shaper.draw(scale)
+      @score.draw(scale)
     end
   end
 end

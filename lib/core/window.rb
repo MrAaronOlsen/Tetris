@@ -1,13 +1,13 @@
 class Window < Gosu::Window
 
 	def initialize
-    $window_width = 1200
-    $window_height = 1200
+    $window_width = 800
+    $window_height = 800
 
     super($window_width, $window_height, false)
     self.caption = "Tetris"
 
-		@scene = Scene.new($window_width, $window_height)
+		@scene = Scene.new($window_width)
  	end
 
 	def update
