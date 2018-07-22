@@ -2,6 +2,7 @@ class Render
 
   class << self
     def line(points, color, z = 1)
+
       Gosu.draw_line(
         points[0].x, points[0].y, color,
         points[1].x, points[1].y, color, z )

@@ -24,6 +24,20 @@ module Board
         move_live_shape(V.new(1, 0))
       when Gosu::KB_SPACE
         drop_live_shape
+      when Gosu::KB_I
+        @well.reset_shape("I")
+      when Gosu::KB_O
+        @well.reset_shape("O")
+      when Gosu::KB_L
+        @well.reset_shape("L")
+      when Gosu::KB_J
+        @well.reset_shape("J")
+      when Gosu::KB_T
+        @well.reset_shape("T")
+      when Gosu::KB_Z
+        @well.reset_shape("Z")
+      when Gosu::KB_S
+        @well.reset_shape("S")
       end
     end
 

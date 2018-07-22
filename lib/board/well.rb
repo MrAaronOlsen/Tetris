@@ -15,6 +15,10 @@ module Board
       @live_shape = @shaper.get_next
     end
 
+    def reset_shape(shape)
+      @live_shape = @shaper.shapes[shape].call(V.new(4, 1))
+    end
+
     def clear
       @grid.clear
       @live_shape = nil
@@ -32,30 +36,33 @@ module Board
     end
 
     def check_for_complete_rows
-      rows_to_drop = 0
+      rows_to_drop = []
       last_row = nil
 
       @grid.rows.reverse.each do |row|
         if row.complete?
           row.clear
 
-          rows_to_drop += 1
+          rows_to_drop << row
           last_row = row
         end
       end
 
       return if last_row.nil?
-      adjust_blocks_above(last_row.number, rows_to_drop)
+      remove_rows(rows_to_drop)
     end
 
-    def adjust_blocks_above(line, rows_to_drop)
-      @grid.rows.reverse.each do |row|
-        next if row.number >= line
+    def remove_rows(rows_to_drop)
+      rows_to_drop.each_with_index do |row_removed, i|
 
-        row.cells.each do |cell|
-          row_to_drop_into = @grid.rows[row.number + rows_to_drop]
-          row_to_drop_into.cells[cell.x].add_block(cell.block)
-          cell.clear_block
+        @grid.rows.reverse.each do |row|
+          next if row.number >= row_removed.number + i
+
+          row.cells.each do |cell|
+            row_to_drop_into = @grid.rows[row.number + 1]
+            row_to_drop_into.cells[cell.x].add_block(cell.block)
+            cell.clear_block
+          end
         end
       end
     end

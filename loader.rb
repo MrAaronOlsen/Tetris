@@ -1,5 +1,6 @@
 require 'gosu'
 require 'pry-nav'
+require 'colorize'
 
 Dir["./lib/*.rb"].each { |file| require file }
 Dir["./lib/shapes/*.rb"].each { |file| require file }

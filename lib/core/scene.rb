@@ -9,7 +9,7 @@ class Scene
     @well = Board::Well.new
     @arbiter = Board::Arbiter.new(@well)
 
-    @tick = Tick.new(0.2)
+    @tick = Tick.new(0.5)
   end
 
   def update
