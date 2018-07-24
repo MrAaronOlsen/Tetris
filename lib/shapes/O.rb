@@ -8,9 +8,13 @@ class Shape
       @type = "O"
       @pos = pos
       @angle = 0
-      @color = Colors.yellow
+      @color = get_color
 
       build
+    end
+
+    def get_color
+      Colors.yellow
     end
 
     def shape_map

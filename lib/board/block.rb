@@ -1,14 +1,13 @@
 class Block
-  attr_accessor :pos, :color, :z, :fill
+  attr_accessor :pos, :color, :z, :fill, :frame
   attr_reader :sides
 
-  def initialize(pos, color, z: 1, fill: false)
+  def initialize(pos, color, z: 1, fill: false, frame: false)
     @pos = pos
     @color = color
     @z = z
     @fill = fill
-
-    build
+    @frame = frame
   end
 
   def x
@@ -23,15 +22,16 @@ class Block
     @pos = pos
   end
 
-  def build
-    @world_sides = [@pos + V.new(-0.5, -0.5), @pos + V.new(0.5, -0.5), @pos + V.new(0.5, 0.5), @pos + V.new(-0.5, 0.5)]
+  def sides
+    [@pos + V.new(-0.5, -0.5), @pos + V.new(0.5, -0.5), @pos + V.new(0.5, 0.5), @pos + V.new(-0.5, 0.5)]
   end
 
-  def get_world_sides(origin, scale)
-    @world_sides.map { |side| scale.convert(origin.convert(side)) }
+  def world(verts, origin, scale)
+    verts.map { |side| scale.convert(origin.convert(side)) }
   end
 
   def draw(origin, scale)
-    Render.rect(get_world_sides(origin, scale), @color.get, @fill, @z)
+    Render.rect(world(sides, origin, scale), @color.get, @fill, @z)
+    Render.rect(world(sides, origin, scale), @color.get_shade(-40).get, false, @z + 1) if @frame
   end
 end

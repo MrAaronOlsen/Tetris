@@ -24,29 +24,24 @@ module Board
         move_live_shape(V.new(1, 0))
       when Gosu::KB_SPACE
         drop_live_shape
-      when Gosu::KB_I
-        @well.reset_shape("I")
-      when Gosu::KB_O
-        @well.reset_shape("O")
-      when Gosu::KB_L
-        @well.reset_shape("L")
-      when Gosu::KB_J
-        @well.reset_shape("J")
-      when Gosu::KB_T
-        @well.reset_shape("T")
-      when Gosu::KB_Z
-        @well.reset_shape("Z")
-      when Gosu::KB_S
-        @well.reset_shape("S")
       end
     end
 
     def update
+      return unless @well.go?
+
+      apply_gravity
+
       if live_shape.nil?
         @well.spawn_shape
         @well.clear if colliding_with_other_pieces(@well.live_shape.pos)
-      else
-        apply_gravity
+      end
+    end
+
+    def start_freeze_timer
+      if @freeze_timer.nil?
+        @freeze_timer = Tick.new(1)
+        live_shape.shade(-60)
       end
     end
 
@@ -61,7 +56,10 @@ module Board
         next_pos = live_shape.pos + (kick_offset[live_shape.state][i] - kick_offset[next_state][i])
         next_transform = Mat.new_transform(next_pos, next_state * 90)
 
-        break unless colliding?(live_shape, next_transform)
+        if colliding?(live_shape, next_transform)
+        else
+          break
+        end
       end
 
       live_shape.set(next_pos, next_state)
@@ -82,12 +80,28 @@ module Board
     end
 
     def apply_gravity
-      @well.freeze_live_shape if !move_live_shape(V.new(0, 1))
+      return if @well.live_shape.nil?
+
+      if !move_live_shape(V.new(0, 1))
+        start_freeze_timer
+
+        if @freeze_timer.go? || @hard_drop
+          @well.freeze_live_shape
+
+          @freeze_timer = nil
+          @hard_drop = nil
+        end
+      else
+        live_shape.reset_color
+      end
     end
 
     def drop_live_shape
       while move_live_shape(V.new(0, 1))
       end
+
+      @hard_drop = true
+      @well.reset_tick
     end
 
     def colliding?(shape, transform)

@@ -7,13 +7,28 @@ module Board
     def initialize
       @width, @height = 10, 16
       @offset = Mat.new_translate(V.new(5, 4))
+
       @grid = Grid.new(@width, @height)
       @shaper = Shaper.new
       @score = Score.new
+
+      @tick = Tick.new(current_speed)
     end
 
-    def speed
+    def go?
+      @tick.go?
+    end
+
+    def current_speed
       1.0 / (@score.level + 1)
+    end
+
+    def reset_tick
+      @tick.reset
+    end
+
+    def push_tick(time)
+      @tick.push(time)
     end
 
     def spawn_shape
@@ -30,6 +45,8 @@ module Board
     end
 
     def freeze_live_shape
+      @live_shape.reset_color
+
       @grid.add_shape(@live_shape)
       check_for_complete_rows
 
@@ -56,6 +73,12 @@ module Board
       return if last_row.nil?
 
       @score.add(rows_to_drop)
+
+      if @score.level_up?
+        @score.level_up
+        @tick.set_span(current_speed)
+      end
+
       remove_rows(rows_to_drop)
     end
 

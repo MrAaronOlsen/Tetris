@@ -2,9 +2,9 @@ module Board
   class Score
     attr_reader :score, :lines, :level
 
-
     def initialize
       @score, @lines, @level = 0, 0, 0
+
       @score_offset = Mat.new_translate(V.new(15.5, 10.5))
       @lines_offset = Mat.new_translate(V.new(15.5, 12.5))
       @level_offset = Mat.new_translate(V.new(15.5, 14.5))
@@ -15,8 +15,14 @@ module Board
     def add(lines)
       @lines += lines.size
       @score += (lines.size * 100) * lines.size
+    end
 
-      @level += 1 if @lines - (@level * 10) >= 10
+    def level_up?
+      @lines - (@level * 10) >= 10
+    end
+
+    def level_up
+      @level += 1
     end
 
     def draw(scale)

@@ -22,8 +22,6 @@ module Board
       return if block.nil?
 
       block.pos = V.new(x, y)
-      block.build
-
       @block = block
     end
 

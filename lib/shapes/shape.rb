@@ -34,7 +34,7 @@ class Shape
 
   def build_shape
     shape_map.map do |pos|
-      Block.new(pos, @color, fill: true, z: 2)
+      Block.new(pos, @color, fill: true, frame: true, z: 2)
     end
   end
 
@@ -47,8 +47,15 @@ class Shape
   def freeze_blocks(transform)
     @blocks.map do |block|
       block.pos = transform.convert(block.pos)
-      block.build
     end
+  end
+
+  def shade(amount)
+    @blocks.each { |block| block.color = @color.get_shade(amount) }
+  end
+
+  def reset_color
+    @blocks.each { |block| block.color = @color }
   end
 
   def draw(offset, scale)

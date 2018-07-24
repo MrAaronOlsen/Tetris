@@ -19,7 +19,7 @@ module Board
     end
 
     def build
-      @world_sides = [V.new(0, 0), V.new(@width, 0), V.new(@width, @height), V.new(0, @height)]
+      @world_sides = [V.new, V.new(@width, 0), V.new(@width, @height), V.new(0, @height)]
     end
 
     def get_world_sides(origin, scale)
