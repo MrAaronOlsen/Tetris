@@ -56,9 +56,10 @@ module Board
         next_pos = live_shape.pos + (kick_offset[live_shape.state][i] - kick_offset[next_state][i])
         next_transform = Mat.new_transform(next_pos, next_state * 90)
 
-        if colliding?(live_shape, next_transform)
-        else
+        if !colliding?(live_shape, next_transform)
           break
+        elsif i == kick_offset[0].size - 1
+          return
         end
       end
 
