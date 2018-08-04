@@ -26,8 +26,8 @@ class Block
     [@pos + V.new(-0.5, -0.5), @pos + V.new(0.5, -0.5), @pos + V.new(0.5, 0.5), @pos + V.new(-0.5, 0.5)]
   end
 
-  def world(verts, origin, scale)
-    verts.map { |side| scale.convert(origin.convert(side)) }
+  def world(verts, pos, scale)
+    verts.map { |side| scale.convert(pos.convert(side)) }
   end
 
   def draw(origin, scale)

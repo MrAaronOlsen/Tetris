@@ -4,7 +4,7 @@ module Board
     attr_reader :width, :height, :world_sides
 
     def initialize
-      @offset = Mat.new_translate(V.new(15.5, 3.5))
+      @shaper_offset = Mat.new_translate(V.new(15.5, 3.5))
       @shape_offset = Mat.new_translate(V.new(0, 2))
       @width, @height = 8, 5
       @bag = Array.new
@@ -37,9 +37,9 @@ module Board
     end
 
     def draw(scale)
-      @next_shape.draw(@offset.add_translate(@shape_offset), scale) if @next_shape
+      @next_shape.draw(@shaper_offset.add_translate(@shape_offset), scale) if @next_shape
 
-      Render.rect(get_world_sides(@offset, scale), Colors.grey.get, false, 1)
+      Render.rect(get_world_sides(@shaper_offset, scale), Colors.grey.get, false, 1)
     end
 
     def shapes

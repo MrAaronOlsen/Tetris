@@ -1,3 +1,3 @@
 require './loader.rb'
 
-Window.new.show
+Game.new.show

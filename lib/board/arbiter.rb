@@ -2,29 +2,12 @@ module Board
   class Arbiter
     attr_reader :well
 
-    def initialize(well)
-      @well = well
+    def initialize
+      @well = Board::Well.new
     end
 
     def live_shape
       @well.live_shape
-    end
-
-    def query(action)
-      return if action.nil?
-
-      case action
-      when Gosu::KB_UP
-        rotate_live_shape(1)
-      when Gosu::KB_DOWN
-        rotate_live_shape(-1)
-      when Gosu::KB_LEFT
-        move_live_shape(V.new(-1, 0))
-      when Gosu::KB_RIGHT
-        move_live_shape(V.new(1, 0))
-      when Gosu::KB_SPACE
-        drop_live_shape
-      end
     end
 
     def update
@@ -36,6 +19,10 @@ module Board
         @well.spawn_shape
         @well.clear if colliding_with_other_pieces(@well.live_shape.pos)
       end
+    end
+
+    def draw(scale)
+      @well.draw(scale)
     end
 
     def start_freeze_timer
@@ -117,7 +104,7 @@ module Board
     end
 
     def colliding_with_walls(pos)
-      pos.x < 0 || pos.x > 9 || pos.y > 15
+      pos.x < 0 || pos.x > 9 || pos.y == @well.height
     end
 
     def colliding_with_other_pieces(pos)

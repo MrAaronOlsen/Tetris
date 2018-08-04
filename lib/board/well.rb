@@ -5,7 +5,7 @@ module Board
     attr_reader :live_shape
 
     def initialize
-      @width, @height = 10, 16
+      @width, @height = 10, 20
       @offset = Mat.new_translate(V.new(5, 4))
 
       @grid = Grid.new(@width, @height)
