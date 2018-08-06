@@ -1,10 +1,11 @@
 module Board
   class Controller
 
-    def query(action, arbiter)
-      return if action.nil?
+    # Override
+    def query(key, arbiter)
+      return if key.nil?
 
-      case action
+      case key
       when Gosu::KB_UP
         arbiter.rotate_live_shape(1)
       when Gosu::KB_DOWN

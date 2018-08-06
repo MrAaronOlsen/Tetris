@@ -1,15 +1,17 @@
 module Board
   class Arbiter
-    attr_reader :well
+    attr_reader :well, :controller
 
     def initialize
       @well = Board::Well.new
+      @controller = Board::Controller.new
     end
 
     def live_shape
       @well.live_shape
     end
 
+    # Override
     def update
       return unless @well.go?
 
@@ -21,13 +23,19 @@ module Board
       end
     end
 
+    # Override
     def draw(scale)
       @well.draw(scale)
     end
 
+    # Override
+    def query_key(key)
+      @controller.query(key, self)
+    end
+
     def start_freeze_timer
       if @freeze_timer.nil?
-        @freeze_timer = Tick.new(1)
+        @freeze_timer = Tick.new(0.5)
         live_shape.shade(-60)
       end
     end

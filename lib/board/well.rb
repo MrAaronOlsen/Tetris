@@ -9,7 +9,7 @@ module Board
       @offset = Mat.new_translate(V.new(5, 4))
 
       @grid = Grid.new(@width, @height)
-      @shaper = Shaper.new
+      @next_shape = NextShape.new
       @score = Score.new
 
       @tick = Tick.new(current_speed)
@@ -32,11 +32,11 @@ module Board
     end
 
     def spawn_shape
-      @live_shape = @shaper.get_next
+      @live_shape = @next_shape.get_next
     end
 
     def reset_shape(shape)
-      @live_shape = @shaper.shapes[shape].call(V.new(4, 1))
+      @live_shape = @next_shape.shapes[shape].call(V.new(4, 1))
     end
 
     def clear
@@ -101,7 +101,7 @@ module Board
       @grid.draw(@offset, scale)
       @live_shape.draw(@offset, scale) if @live_shape
 
-      @shaper.draw(scale)
+      @next_shape.draw(scale)
       @score.draw(scale)
     end
   end

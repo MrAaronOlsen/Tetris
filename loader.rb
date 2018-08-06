@@ -9,3 +9,4 @@ Dir["./lib/render/*.rb"].each { |file| require file }
 Dir["./lib/ruby/*.rb"].each { |file| require file }
 Dir["./lib/math/*.rb"].each { |file| require file }
 Dir["./lib/core/*.rb"].each { |file| require file }
+Dir["./lib/game/*.rb"].each { |file| require file }
