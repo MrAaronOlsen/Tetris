@@ -7,13 +7,13 @@ module Board
 
       case key
       when Gosu::KB_UP
-        arbiter.rotate_live_shape(1)
+        arbiter.rotate_shape(1)
       when Gosu::KB_DOWN
-        arbiter.rotate_live_shape(-1)
+        arbiter.rotate_shape(-1)
       when Gosu::KB_LEFT
-        arbiter.move_live_shape(V.new(-1, 0))
+        arbiter.move_shape(V.new(-1, 0))
       when Gosu::KB_RIGHT
-        arbiter.move_live_shape(V.new(1, 0))
+        arbiter.move_shape(V.new(1, 0))
       when Gosu::KB_SPACE
         arbiter.drop_live_shape
       when Gosu::KB_Q

@@ -12,7 +12,7 @@ module Board
       build
     end
 
-    def get_next
+    def get
       @live_shape = @next_shape || random_shape
       @next_shape = random_shape
       @live_shape

@@ -32,11 +32,7 @@ module Board
     end
 
     def spawn_shape
-      @live_shape = @next_shape.get_next
-    end
-
-    def reset_shape(shape)
-      @live_shape = @next_shape.shapes[shape].call(V.new(4, 1))
+      @live_shape = @next_shape.get
     end
 
     def clear
