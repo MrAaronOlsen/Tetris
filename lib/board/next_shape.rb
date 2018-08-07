@@ -5,7 +5,7 @@ module Board
 
     def initialize
       @frame_offset = Mat.new_translate(V.new(15.5, 3.5))
-      @shape_offset = Mat.new_translate(V.new(0, 2))
+      @shape_offset = Mat.new_translate(V.new(0, 2)).add_translate(@frame_offset)
       @width, @height = 8, 5
       @bag = Array.new
 
@@ -33,23 +33,12 @@ module Board
     end
 
     def fill_bag
-      @bag = shapes.values
+      @bag = Shapes.factories
     end
 
     def draw(scale)
-      @next_shape.draw(@frame_offset.add_translate(@shape_offset), scale) if @next_shape
-
+      @next_shape.draw(@shape_offset, scale) if @next_shape
       Render.rect(get_world_sides(@frame_offset, scale), Colors.grey.get, false, 1)
-    end
-
-    def shapes
-      { "S" => lambda { |pos| Shape::S.new(pos) },
-        "Z" => lambda { |pos| Shape::Z.new(pos) },
-        "J" => lambda { |pos| Shape::J.new(pos) },
-        "L" => lambda { |pos| Shape::L.new(pos) },
-        "T" => lambda { |pos| Shape::T.new(pos) },
-        "O" => lambda { |pos| Shape::O.new(pos) },
-        "I" => lambda { |pos| Shape::I.new(pos) } }
     end
   end
 end

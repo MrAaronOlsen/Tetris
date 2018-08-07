@@ -1,26 +1,27 @@
 class Game < Gosu::Window
 
 	def initialize
-    @width = 800
-    @height = 800
+    $width = 800
+    $height = 800
 
-    super(@width, @height, false)
+    super($width, $height, false)
     self.caption = "Tetris"
 
-    @scale = Mat.new_scale(@width / 24, @width / 24)
-    @arbiter = Board::Arbiter.new
+    @scale = Mat.new_scale($width / 24, $width / 24)
+    # @board = Board::Arbiter.new
+		@menu = Menu::Arbiter.new
  	end
 
 	def update
-		@arbiter.update
+		@menu.update
 	end
 
 	def draw
-		@arbiter.draw(@scale)
+		@menu.draw(@scale)
 	end
 
 	def button_down(key)
-		@arbiter.query(key)
+		@menu.query_key(key)
 
 		close if key == Gosu::KbEscape
 	end

@@ -6,7 +6,6 @@ module Board
       @score, @lines, @level = 0, 0, 0
 
       @text = Text.new(40)
-      @font = Gosu::Font.new(40)
     end
 
     def add(lines)

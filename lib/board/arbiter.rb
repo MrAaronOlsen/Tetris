@@ -1,10 +1,10 @@
 module Board
   class Arbiter
-    attr_reader :well, :controller
+    attr_reader :well, :controller, :constraint
 
     def initialize
-      @well = Board::Well.new
-      @controller = Board::Controller.new
+      @well = Well.new
+      @controller = Controller.new
       @constraint = Constraint.new(@well.grid, walls)
     end
 
