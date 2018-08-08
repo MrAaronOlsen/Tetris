@@ -50,11 +50,13 @@ class Constraint
   end
 
   def colliding_with_other_pieces(pos)
+    return if @grid.nil?
     @grid.rows[pos.y].cells[pos.x].has_block?
   end
 
   def colliding_with_walls(pos)
-    pos.x < walls[:left] || pos.x > walls[:right] || pos.y > walls[:bottom] || pos.y < walls[:top]
+    return if @walls.nil?
+    pos.x < @walls[:left] || pos.x > @walls[:right] || pos.y > @walls[:bottom] || pos.y < @walls[:top]
   end
 
   def get_next_state(current_state, direction)

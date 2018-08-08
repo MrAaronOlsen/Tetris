@@ -1,5 +1,4 @@
 module Shapes
-
   def self.types
     ["S", "Z", "J", "L", "T", "O", "I"]
   end
