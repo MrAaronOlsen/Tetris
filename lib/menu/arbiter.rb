@@ -14,6 +14,8 @@ module Menu
       if @tick.go?
         @contents.rotate_selected_shape
       end
+
+      @frame.update
     end
 
     def draw(scale)

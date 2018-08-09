@@ -24,6 +24,11 @@ class Matrix
       rot = V.from_angle(angle).rounded;
       Mat.new(rot.x, -rot.y, vect.x, rot.y, rot.x, vect.y)
     end
+
+    def new_transform_free(vect, angle)
+      rot = V.from_angle(angle);
+      Mat.new(rot.x, -rot.y, vect.x, rot.y, rot.x, vect.y)
+    end
   end
 
   def convert(vert)

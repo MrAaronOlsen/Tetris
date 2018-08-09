@@ -24,6 +24,12 @@ class Constraint
     shape.set(next_pos, next_state)
   end
 
+  def rotate_shape_free(angle, shape)
+    return if shape.nil?
+
+    shape.set_free(shape.pos, angle + shape.state)
+  end
+
   def move_shape(direction, shape)
     return if shape.nil?
 

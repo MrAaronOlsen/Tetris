@@ -5,6 +5,13 @@ module Menu
       @frame_offset = Mat.new_translate(V.new(2, 2))
       @height, @width = 20, 20
 
+      @falling_shapes = []
+      @constraint = Constraint.new(nil, nil)
+      @origin = Mat.new_identity
+
+      @new_shape_tick = Tick.new(1)
+      @drop_shape_tick = Tick.new(0.1)
+      @DroppingShape = shape = Struct.new(:get, :rot, :speed)
       build
     end
 
@@ -16,8 +23,37 @@ module Menu
       @world_sides.map { |side| scale.convert(origin.convert(side)) }
     end
 
-    def draw(scale)
-      Render.rect(get_world_sides(@frame_offset, scale), Colors.grey.get, false, 1)
+    def update
+      if @new_shape_tick.go? && @falling_shapes.size < 8
+        new_shape = Shapes.factories.sample.call(V.new(rand(4..20), -3))
+        new_shape.fill = false
+        new_shape.z = -1
+        new_shape.build_shape
+
+        speed = rand(0.10..0.75)
+        rotation = 30 * speed
+        shape = @DroppingShape.new(new_shape, rotation, speed)
+
+        @falling_shapes.push(shape)
+        @new_shape_tick = Tick.new(rand(1..3))
+      end
+
+      drop_shapes if @drop_shape_tick.go?
     end
+
+    def drop_shapes
+      @falling_shapes.each do |shape|
+
+        @falling_shapes.delete(shape) if shape.get.pos.y > 28
+        @constraint.move_shape(V.new(0, shape.speed), shape.get)
+        @constraint.rotate_shape_free(shape.rot, shape.get)
+      end
+    end
+
+    def draw(scale)
+      @falling_shapes.each { |shape| shape.get.draw(@origin, scale) }
+      Render.rect(get_world_sides(@frame_offset, scale), Colors.grey.get, false, 2)
+    end
+
   end
 end

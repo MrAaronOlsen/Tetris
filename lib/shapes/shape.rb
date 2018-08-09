@@ -2,10 +2,13 @@ class Shape
   attr_reader :pos, :state, :blocks
   attr_reader :color, :type
   attr_reader :transform
+  attr_accessor :fill, :frame, :z
 
   def build
-    @blocks = build_shape
+    @fill, @frame, @z = true, true, 2
     @state = 0
+
+    build_shape
     set_transform
   end
 
@@ -28,13 +31,24 @@ class Shape
     set_transform
   end
 
+  def set_free(pos, angle)
+    @pos = pos
+    @state = angle
+
+    set_transform_free
+  end
+
   def set_transform
     @transform = Mat.new_transform(@pos, get_angle)
   end
 
+  def set_transform_free
+    @transform = Mat.new_transform_free(@pos, @state)
+  end
+
   def build_shape
-    shape_map.map do |pos|
-      Block.new(pos, @color, fill: true, frame: true, z: 2)
+    @blocks = shape_map.map do |pos|
+      Block.new(pos, @color, fill: @fill, frame: @frame, z: @z)
     end
   end
 
