@@ -1,5 +1,6 @@
 module Menu
   class Contents
+    attr_reader :selection
 
     def initialize
       @normal_text = Text.new(40)

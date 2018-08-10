@@ -10,6 +10,8 @@ module Menu
         arbiter.move_selection(-1)
       when Gosu::KB_DOWN
         arbiter.move_selection(1)
+      when Gosu::KB_RETURN
+        arbiter.trigger_action
       end
     end
   end

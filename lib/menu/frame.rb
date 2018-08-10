@@ -25,7 +25,7 @@ module Menu
 
     def update
       if @new_shape_tick.go? && @falling_shapes.size < 8
-        new_shape = Shapes.factories.sample.call(V.new(rand(4..20), -3))
+        new_shape = Shapes.factories.sample.call(V.new(rand(1.0..24.0), -3))
         new_shape.fill = false
         new_shape.z = -1
         new_shape.build_shape

@@ -27,6 +27,13 @@ module Menu
       @contents.move(direction)
     end
 
+    def trigger_action
+      action =  @contents.selection
+
+      $game.new_game if action == 0
+      $game.close if action == 2
+    end
+
     def query_key(key)
       @controller.query(key, self)
     end
