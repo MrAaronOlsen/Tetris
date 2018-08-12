@@ -18,8 +18,13 @@ class Game < Gosu::Window
 		@current = Board::Arbiter.new
 	end
 
-	def got_to_menu
+	def go_to_menu
 		@current = @menu
+	end
+
+	def game_over(score)
+		@menu.game_over(score)
+		go_to_menu
 	end
 
 	def update

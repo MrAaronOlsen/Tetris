@@ -11,7 +11,7 @@ module Menu
 
       @new_shape_tick = Tick.new(1)
       @drop_shape_tick = Tick.new(0.1)
-      @DroppingShape = shape = Struct.new(:get, :rot, :speed)
+      @DroppingShape = Struct.new(:get, :rot, :speed)
       build
     end
 

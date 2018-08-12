@@ -30,8 +30,19 @@ module Menu
     def trigger_action
       action =  @contents.selection
 
+      @contents.show_scores if action == 1
       $game.new_game if action == 0
       $game.close if action == 2
+    end
+
+    def return_to_menu
+      if @contents.show_scores
+        @contents.show_menu
+      end
+    end
+
+    def game_over(score)
+      @contents.game_over(score)
     end
 
     def query_key(key)

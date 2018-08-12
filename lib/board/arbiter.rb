@@ -24,7 +24,7 @@ module Board
 
       if live_shape.nil?
         @well.spawn_shape
-        $game.got_to_menu if @constraint.colliding_with_other_pieces(live_shape.pos)
+        $game.game_over(@well.get_score) if @constraint.colliding_with_other_pieces(live_shape.pos)
       end
     end
 

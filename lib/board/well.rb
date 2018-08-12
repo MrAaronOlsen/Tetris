@@ -27,6 +27,10 @@ module Board
       @tick.reset
     end
 
+    def get_score
+      @score
+    end
+
     def push_tick(time)
       @tick.push(time)
     end
