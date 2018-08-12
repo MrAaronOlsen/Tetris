@@ -9,8 +9,8 @@ module Menu
       @selection = 0
       @constraint = Constraint.new(nil, nil)
 
-      @IO = Tetris::IO.new
       @show_scores = false
+      @high_score = HighScore.new
       build_selection_shapes
     end
 
@@ -20,14 +20,18 @@ module Menu
 
     def draw(scale)
       if @show_scores
-        draw_scores(@normal_text, scale)
+        @high_score.draw(@normal_text, scale)
       else
-        contents_text[@selection].call(@selected_text, scale)
-        @selection_shapes[@selection].draw(Mat.new_identity, scale)
+        draw_contents(scale)
+      end
+    end
 
-        contents_text.each_with_index do |text, i|
-          text.call(@normal_text, scale) if i != @selection
-        end
+    def draw_contents(scale)
+      contents_text[@selection].call(@selected_text, scale)
+      @selection_shapes[@selection].draw(Mat.new_identity, scale)
+
+      contents_text.each_with_index do |text, i|
+        text.call(@normal_text, scale) if i != @selection
       end
     end
 
@@ -44,11 +48,16 @@ module Menu
 
     def contents_text
       [ lambda { |text, scale| text.write("Play", scale.convert(V.new(10, 9.5)), Colors.green.get) },
-        lambda { |text, scale| text.write("Score Board #{@score}", scale.convert(V.new(10, 11.5)), Colors.blue.get) },
-        lambda { |text, scale| text.write("Quit #{@score}", scale.convert(V.new(10, 13.5)), Colors.red.get) } ]
+        lambda { |text, scale| text.write("Score Board", scale.convert(V.new(10, 11.5)), Colors.blue.get) },
+        lambda { |text, scale| text.write("Quit", scale.convert(V.new(10, 13.5)), Colors.red.get) } ]
     end
 
-    def show_scores
+    def show_scores(reset)
+      if reset
+        @high_score.new_high_score = false
+        @high_score.game_over = false
+      end
+
       @show_scores = true
     end
 
@@ -57,22 +66,10 @@ module Menu
     end
 
     def game_over(score)
-      @IO.add_score(score)
-      show_scores
-    end
-
-    def draw_scores(text, scale)
-      saved_scores = @IO.load_scores
-
-      text.write("Score", scale.convert(V.new(6.5, (4))), Colors.purple.get)
-      text.write("Lines", scale.convert(V.new(10.5, (4))), Colors.purple.get)
-      text.write("Level", scale.convert(V.new(14.5, (4))), Colors.purple.get)
-
-      saved_scores.sort { |a, b| b.score <=> a.score }.each_with_index do |score, i|
-        text.write(score.score, scale.convert(V.new(6.5, (i + 6))), Colors.orange.get)
-        text.write(score.lines, scale.convert(V.new(10.5, (i + 6))), Colors.orange.get)
-        text.write(score.level, scale.convert(V.new(14.5, (i + 6))), Colors.orange.get)
-      end
+      @high_score.game_over = true
+      @high_score.new_high_score = true if @high_score.new_high(score)
+      @high_score.add_score(score)
+      show_scores(false)
     end
   end
 end

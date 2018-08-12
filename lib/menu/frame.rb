@@ -5,13 +5,14 @@ module Menu
       @frame_offset = Mat.new_translate(V.new(2, 2))
       @height, @width = 20, 20
 
-      @falling_shapes = []
       @constraint = Constraint.new(nil, nil)
       @origin = Mat.new_identity
 
       @new_shape_tick = Tick.new(1)
       @drop_shape_tick = Tick.new(0.1)
-      @DroppingShape = Struct.new(:get, :rot, :speed)
+
+      @falling_shapes = []
+      @FallingShape = Struct.new(:get, :rot, :speed)
       build
     end
 
@@ -25,20 +26,23 @@ module Menu
 
     def update
       if @new_shape_tick.go? && @falling_shapes.size < 8
-        new_shape = Shapes.factories.sample.call(V.new(rand(1.0..24.0), -3))
-        new_shape.fill = false
-        new_shape.z = -1
-        new_shape.build_shape
-
-        speed = rand(0.10..0.75)
-        rotation = 30 * speed
-        shape = @DroppingShape.new(new_shape, rotation, speed)
-
-        @falling_shapes.push(shape)
+        @falling_shapes.push(new_falling_shape)
         @new_shape_tick = Tick.new(rand(1..3))
       end
 
       drop_shapes if @drop_shape_tick.go?
+    end
+
+    def new_falling_shape
+      new_shape = Shapes.factories.sample.call(V.new(rand(1.0..24.0), -3))
+      new_shape.fill = false
+      new_shape.z = -1
+      new_shape.build_shape
+
+      speed = rand(0.10..0.75)
+      rotation = 30 * speed
+
+      @FallingShape.new(new_shape, rotation, speed)
     end
 
     def drop_shapes

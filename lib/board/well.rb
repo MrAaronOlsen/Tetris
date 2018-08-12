@@ -6,7 +6,7 @@ module Board
 
     def initialize
       @width, @height = 10, 18
-      @offset = Mat.new_translate(V.new(5, 4))
+      @offset = Mat.new_translate(V.new(3, 4))
 
       @grid = Grid.new(@width, @height)
       @next_shape = NextShape.new

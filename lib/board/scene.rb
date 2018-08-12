@@ -1,8 +1,10 @@
 module Board
-  class Arbiter
+  class Scene
     attr_reader :well, :controller, :constraint
 
-    def initialize
+    # Override
+    def initialize(game)
+      @game = game
       @well = Well.new
       @controller = Controller.new
       @constraint = Constraint.new(@well.grid, walls)
@@ -24,7 +26,7 @@ module Board
 
       if live_shape.nil?
         @well.spawn_shape
-        $game.game_over(@well.get_score) if @constraint.colliding_with_other_pieces(live_shape.pos)
+        @game.game_over(@well.get_score) if @constraint.colliding_with_other_pieces(live_shape.pos)
       end
     end
 

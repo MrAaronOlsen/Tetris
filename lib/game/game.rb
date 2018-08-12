@@ -9,13 +9,11 @@ class Game < Gosu::Window
     self.caption = "Tetris"
 
     @scale = Mat.new_scale($width / 24, $width / 24)
-		@menu = Menu::Arbiter.new
-
-		@current = @menu
+		@current = @menu = Menu::Scene.new(self)
  	end
 
 	def new_game
-		@current = Board::Arbiter.new
+		@current = Board::Scene.new(self)
 	end
 
 	def go_to_menu

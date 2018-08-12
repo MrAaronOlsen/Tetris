@@ -1,8 +1,9 @@
 module Menu
-  class Arbiter
+  class Scene
     attr_reader :frame
 
-    def initialize
+    def initialize(game)
+      @game = game
       @frame = Frame.new
       @contents = Contents.new
       @controller = Controller.new
@@ -30,15 +31,13 @@ module Menu
     def trigger_action
       action =  @contents.selection
 
-      @contents.show_scores if action == 1
-      $game.new_game if action == 0
-      $game.close if action == 2
+      @contents.show_scores(true) if action == 1
+      @game.new_game if action == 0
+      @game.close if action == 2
     end
 
     def return_to_menu
-      if @contents.show_scores
-        @contents.show_menu
-      end
+      @contents.show_menu
     end
 
     def game_over(score)

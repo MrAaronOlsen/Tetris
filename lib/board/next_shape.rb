@@ -4,7 +4,7 @@ module Board
     attr_reader :width, :height, :world_sides
 
     def initialize
-      @frame_offset = Mat.new_translate(V.new(15.5, 3.5))
+      @frame_offset = Mat.new_translate(V.new(13.5, 3.5))
       @shape_offset = Mat.new_translate(V.new(0, 2)).add_translate(@frame_offset)
       @width, @height = 8, 5
       @bag = Array.new
