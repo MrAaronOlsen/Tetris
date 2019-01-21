@@ -39,7 +39,7 @@ module Menu
       new_shape.z = -1
       new_shape.build_shape
 
-      speed = rand(0.10..0.75)
+      speed = rand(0.05..0.5)
       rotation = 30 * speed
 
       @FallingShape.new(new_shape, rotation, speed)
