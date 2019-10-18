@@ -5,6 +5,6 @@ class Text
   end
 
   def write(text, loc, color)
-    @writer.draw(text, loc.x, loc.y, 1, 1, 1, color)
+    @writer.draw_text(text, loc.x, loc.y, 1, 1, 1, color)
   end
 end
